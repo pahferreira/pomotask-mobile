@@ -1,4 +1,4 @@
-package com.mobile;
+package com.pomotask;
 
 import android.app.Application;
 import android.util.Log;
