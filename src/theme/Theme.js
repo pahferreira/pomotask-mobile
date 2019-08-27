@@ -4,6 +4,7 @@ export const Colors = {
   RED: '#b96c6c',
   BLUE: '#6c83b9',
   BLACK: '#757575',
+  BLACK_TRANSPARENT: 'rgba(117, 117, 117, 0.5)',
   WHITE: '#ffffff',
 };
 
