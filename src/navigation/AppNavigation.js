@@ -12,6 +12,9 @@ const AppStack = createStackNavigator(
   },
   {
     initialRouteName: 'ClockScreen',
+    defaultNavigationOptions: {
+      header: null,
+    },
   },
 );
 
