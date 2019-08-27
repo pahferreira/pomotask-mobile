@@ -4,18 +4,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: '5%',
+    paddingVertical: '3%',
   },
   containerButtons: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
   },
+  header: {
+    alignItems: 'flex-start',
+    width: '100%',
+  },
   content: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  footer: {
+    alignItems: 'flex-end',
+    width: '100%',
   },
 });
 
