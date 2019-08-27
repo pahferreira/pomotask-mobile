@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 5,
     width: 80,
-    height: 40,
+    height: 34,
     borderRadius: 10,
   },
   text: {
