@@ -2,8 +2,8 @@ import React from 'react';
 import { Text } from 'react-native';
 import styles from './styles/ClockStyle';
 
-const Clock = () => {
-  return <Text style={styles.text}>25:00</Text>;
+const Clock = props => {
+  return <Text style={styles.text}>{props.children}</Text>;
 };
 
 export default Clock;

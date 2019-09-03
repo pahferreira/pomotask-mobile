@@ -8,11 +8,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     paddingVertical: '3%',
   },
-  containerButtons: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-around',
-  },
   header: {
     alignItems: 'flex-start',
     width: '100%',
