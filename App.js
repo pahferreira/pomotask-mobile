@@ -1,13 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import AppNavigation from './src/navigation/AppNavigation';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <AppNavigation />
-    </View>
+    <MenuProvider backHandler={true}>
+      <View style={styles.container}>
+        <StatusBar hidden={true} />
+        <AppNavigation />
+      </View>
+    </MenuProvider>
   );
 };
 

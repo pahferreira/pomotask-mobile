@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '../../theme/Theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +10,9 @@ const styles = StyleSheet.create({
     paddingVertical: '3%',
   },
   header: {
-    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: '100%',
   },
   content: {
@@ -20,6 +23,19 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: 'flex-end',
     width: '100%',
+  },
+  containerButtons: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'center',
+  },
+  optionsContainer: {
+    width: 100,
+  },
+  optionText: {
+    color: Colors.BLACK,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

@@ -5,7 +5,7 @@ import { Colors } from '../theme/Theme';
 import styles from './styles/ButtonsContainerStyle';
 
 const Buttons = props => {
-  const { clockIsRunning, onPlay, onPause, onReset, onRest } = props;
+  const { clockIsRunning, onPlay, onPause } = props;
   const playOrPause = () => {
     if (clockIsRunning) {
       return (
@@ -27,23 +27,7 @@ const Buttons = props => {
       );
     }
   };
-  return (
-    <View style={styles.containerButtons}>
-      {playOrPause()}
-      <ActionButton
-        name="reset"
-        icon="refresh"
-        color={Colors.BLUE}
-        onPress={onReset}
-      />
-      <ActionButton
-        name="rest"
-        icon="power-off"
-        color={Colors.BLUE}
-        onPress={onRest}
-      />
-    </View>
-  );
+  return <View style={styles.containerButtons}>{playOrPause()}</View>;
 };
 
 export default Buttons;

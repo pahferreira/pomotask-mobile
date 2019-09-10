@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
 import styles from './styles/ClockScreenStyle';
 import { Colors } from '../theme/Theme';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -17,10 +23,11 @@ const ClockScreen = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentTime, setCurrentTime] = useState(TIME);
   const [clockIsRunning, setClockIsRunning] = useState(false);
+  const timeoutRef = useRef();
 
   useEffect(() => {
     if (clockIsRunning && currentTime > 0) {
-      setTimeout(updateTime, 1000);
+      timeoutRef.current = setTimeout(updateTime, 1000);
     } else {
       clockStop();
     }
@@ -44,12 +51,13 @@ const ClockScreen = () => {
 
   const clockStart = () => {
     if (currentTime > 0) {
-      updateTime();
       setClockIsRunning(true);
+      updateTime();
     }
   };
 
   const clockStop = () => {
+    clearTimeout(timeoutRef.current);
     setClockIsRunning(false);
   };
 
@@ -63,6 +71,27 @@ const ClockScreen = () => {
         <TouchableOpacity>
           <Icon name="list" size={22} color={Colors.BLACK} />
         </TouchableOpacity>
+        <Menu>
+          <MenuTrigger>
+            <Icon name="ellipsis-v" size={22} color={Colors.BLACK} />
+          </MenuTrigger>
+          <MenuOptions optionsContainerStyle={styles.optionsContainer}>
+            <MenuOption
+              onSelect={() => {
+                clockStop();
+                setCurrentTime(TIME);
+              }}>
+              <Text style={styles.optionText}>Work</Text>
+            </MenuOption>
+            <MenuOption
+              onSelect={() => {
+                clockStop();
+                setCurrentTime(REST_TIME);
+              }}>
+              <Text style={styles.optionText}>Rest</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
       </View>
       <View style={styles.content}>
         <Clock>{formatTime(currentTime)}</Clock>
@@ -71,8 +100,6 @@ const ClockScreen = () => {
             clockIsRunning={clockIsRunning}
             onPlay={clockStart}
             onPause={clockStop}
-            onReset={() => setCurrentTime(TIME)}
-            onRest={() => setCurrentTime(REST_TIME)}
           />
         </View>
       </View>
