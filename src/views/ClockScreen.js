@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import styles from './styles/ClockScreenStyle';
 import { Colors } from '../theme/Theme';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -14,6 +19,7 @@ import {
 import ButtonsContainer from '../components/ButtonsContainer';
 import Clock from '../components/Clock';
 import AddButton from '../components/AddButton';
+import TaskList from '../components/TaskList';
 import AddTaskModal from '../components/AddTaskModal';
 
 const TIME = 10;
@@ -21,6 +27,7 @@ const REST_TIME = 5;
 
 const ClockScreen = () => {
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showTaskList, setShowTaskList] = useState(false);
   const [currentTime, setCurrentTime] = useState(TIME);
   const [clockIsRunning, setClockIsRunning] = useState(false);
   const timeoutRef = useRef();
@@ -67,8 +74,16 @@ const ClockScreen = () => {
         visible={showAddModal}
         onClose={() => setShowAddModal(false)}
       />
+      {showTaskList && (
+        <TouchableWithoutFeedback
+          style={[styles.overlay]}
+          onPress={() => setShowTaskList(false)}>
+          <View style={[styles.overlay]} />
+        </TouchableWithoutFeedback>
+      )}
+      <TaskList visible={showTaskList} onClose={() => setShowTaskList(false)} />
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowTaskList(true)}>
           <Icon name="list" size={22} color={Colors.BLACK} />
         </TouchableOpacity>
         <Menu>
