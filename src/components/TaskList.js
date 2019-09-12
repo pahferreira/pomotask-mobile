@@ -22,13 +22,6 @@ const TaskList = props => {
   const { visible, onClose, taskList } = props;
   const { width } = Dimensions.get('screen');
   let positionAnimatedValue = new Animated.Value(-width);
-  const data = [
-    { name: 'Clean the Bathroom', done: true },
-    { name: 'Take the dogs for a walk', done: true },
-    { name: 'Study math', done: false },
-    { name: 'Dance Lessons at Gym', done: false },
-    { name: 'Write about the things I should do tomorrow', done: false },
-  ];
 
   if (visible) {
     Animated.timing(positionAnimatedValue, {
@@ -53,6 +46,27 @@ const TaskList = props => {
     });
   };
 
+  const _renderList = () => {
+    if (taskList.length > 0) {
+      return (
+        <FlatList
+          style={styles.listContainer}
+          data={taskList}
+          renderItem={({ item, index }) => {
+            return <Task task={item} onPress={() => onFinishTask(index)} />;
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      );
+    } else {
+      return (
+        <Text style={styles.text}>
+          Your task list is empty. Please add one task.
+        </Text>
+      );
+    }
+  };
+
   return (
     <Animated.View style={[styles.container, { left: positionAnimatedValue }]}>
       <View style={styles.header}>
@@ -61,14 +75,7 @@ const TaskList = props => {
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>Task List</Text>
-      <FlatList
-        style={styles.listContainer}
-        data={taskList}
-        renderItem={({ item, index }) => {
-          return <Task task={item} onPress={() => onFinishTask(index)} />;
-        }}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      {_renderList()}
     </Animated.View>
   );
 };

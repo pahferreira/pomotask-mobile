@@ -30,9 +30,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   text: {
-    fontSize: 80,
-    fontFamily: 'SourceCodePro',
-    marginBottom: 20,
+    fontFamily: 'Roboto',
     color: Colors.BLACK,
   },
   title: {
