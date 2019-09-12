@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -14,6 +14,7 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import Context from '../context/Context';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -26,8 +27,11 @@ const TIME = 10;
 const REST_TIME = 5;
 
 const ClockScreen = () => {
+  const { state, dispatch } = useContext(Context);
+  const { taskList } = state;
   const [showAddModal, setShowAddModal] = useState(false);
   const [showTaskList, setShowTaskList] = useState(false);
+  // const [tasks, setTasks] = useState(taskList);
   const [currentTime, setCurrentTime] = useState(TIME);
   const [clockIsRunning, setClockIsRunning] = useState(false);
   const timeoutRef = useRef();
@@ -68,10 +72,19 @@ const ClockScreen = () => {
     setClockIsRunning(false);
   };
 
+  const handleAddTask = task => {
+    dispatch({
+      type: 'ADD_TASK',
+      payload: task,
+    });
+    setShowAddModal(false);
+  };
+
   return (
     <View style={styles.container}>
       <AddTaskModal
         visible={showAddModal}
+        onAdd={handleAddTask}
         onClose={() => setShowAddModal(false)}
       />
       {showTaskList && (
@@ -81,7 +94,11 @@ const ClockScreen = () => {
           <View style={[styles.overlay]} />
         </TouchableWithoutFeedback>
       )}
-      <TaskList visible={showTaskList} onClose={() => setShowTaskList(false)} />
+      <TaskList
+        visible={showTaskList}
+        onClose={() => setShowTaskList(false)}
+        taskList={taskList}
+      />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setShowTaskList(true)}>
           <Icon name="list" size={22} color={Colors.BLACK} />

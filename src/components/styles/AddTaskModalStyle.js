@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 11,
     paddingHorizontal: '5%',
     width: '75%',
-    height: '45%',
+    height: 300,
   },
   footer: {
     width: '100%',

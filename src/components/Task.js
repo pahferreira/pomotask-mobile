@@ -5,7 +5,7 @@ import styles from './styles/TaskStyle';
 import { Colors } from '../theme/Theme';
 
 const Task = props => {
-  const { task } = props;
+  const { task, onPress } = props;
 
   const isDone = () => {
     if (task.done) {
@@ -19,7 +19,7 @@ const Task = props => {
     <View style={styles.container}>
       <Text style={[styles.text, isDone()]}>{task.name}</Text>
       {!task.done && (
-        <TouchableOpacity style={styles.checkButton}>
+        <TouchableOpacity style={styles.checkButton} onPress={onPress}>
           <Icon name="check" size={20} color={Colors.GREEN} />
         </TouchableOpacity>
       )}
