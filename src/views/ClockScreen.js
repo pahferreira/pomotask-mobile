@@ -101,11 +101,13 @@ const ClockScreen = () => {
       />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setShowTaskList(true)}>
-          <Icon name="list" size={22} color={Colors.BLACK} />
+          <Icon name="list" size={26} color={Colors.BLACK} />
         </TouchableOpacity>
         <Menu>
           <MenuTrigger>
-            <Icon name="ellipsis-v" size={22} color={Colors.BLACK} />
+            <View style={styles.triggerOptionsContainer}>
+              <Icon name="ellipsis-v" size={26} color={Colors.BLACK} />
+            </View>
           </MenuTrigger>
           <MenuOptions optionsContainerStyle={styles.optionsContainer}>
             <MenuOption

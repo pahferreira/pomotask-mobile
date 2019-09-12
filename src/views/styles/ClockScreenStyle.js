@@ -41,12 +41,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   optionsContainer: {
-    width: 100,
+    width: 125,
   },
   optionText: {
     color: Colors.BLACK,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  triggerOptionsContainer: {
+    width: 30,
+    alignItems: 'flex-end',
   },
 });
 
