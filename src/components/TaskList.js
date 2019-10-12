@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -18,24 +18,27 @@ import Context from '../context/Context';
 import Task from './Task';
 
 const TaskList = props => {
-  const { dispatch } = useContext(Context);
-  const { visible, onClose, taskList } = props;
+  const { state, dispatch } = useContext(Context);
+  const { taskList } = state;
+  const { visible, onClose } = props;
   const { width } = Dimensions.get('screen');
   let positionAnimatedValue = new Animated.Value(-width);
 
-  if (visible) {
-    Animated.timing(positionAnimatedValue, {
-      duration: 500,
-      toValue: 0,
-      easing: Easing.bezier(0, 0, 0.34, 0.99),
-    }).start();
-  } else {
-    Animated.timing(positionAnimatedValue, {
-      duration: 500,
-      toValue: -width,
-      easing: Easing.bezier(0, 0.01, 1, 0.27),
-    }).start();
-  }
+  useEffect(() => {
+    if (visible) {
+      Animated.timing(positionAnimatedValue, {
+        duration: 500,
+        toValue: 0,
+        easing: Easing.bezier(0, 0, 0.34, 0.99),
+      }).start();
+    } else {
+      Animated.timing(positionAnimatedValue, {
+        duration: 500,
+        toValue: -width,
+        easing: Easing.bezier(0, 0.01, 1, 0.27),
+      }).start();
+    }
+  }, [visible]);
 
   const onFinishTask = index => {
     dispatch({
