@@ -5,7 +5,14 @@ import { Colors } from '../theme/Theme';
 import styles from './styles/ButtonsContainerStyle';
 
 const Buttons = props => {
-  const { clockIsRunning, onPlay, onPause } = props;
+  const {
+    clockIsRunning,
+    onPlay,
+    onPause,
+    currentTime,
+    setWork,
+    setRest,
+  } = props;
   const playOrPause = () => {
     if (clockIsRunning) {
       return (
@@ -27,7 +34,35 @@ const Buttons = props => {
       );
     }
   };
-  return <View style={styles.containerButtons}>{playOrPause()}</View>;
+
+  const renderButtons = () => {
+    if (currentTime) {
+      return playOrPause();
+    } else {
+      return (
+        <>
+          <View style={styles.buttonContainer}>
+            <ActionButton
+              name="work"
+              icon="fire"
+              color={Colors.BLUE}
+              onPress={setWork}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <ActionButton
+              name="rest"
+              icon="coffee"
+              color={Colors.BLUE}
+              onPress={setRest}
+            />
+          </View>
+        </>
+      );
+    }
+  };
+
+  return <View style={styles.containerButtons}>{renderButtons()}</View>;
 };
 
 export default Buttons;

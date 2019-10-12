@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    marginHorizontal: 10,
+  },
 });
 
 export default styles;
