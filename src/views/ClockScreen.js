@@ -15,6 +15,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import Context from '../context/Context';
+import Sound from 'react-native-sound';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -26,9 +27,12 @@ import AddTaskModal from '../components/AddTaskModal';
 const TIME = 10;
 const REST_TIME = 5;
 
+Sound.setCategory('Playback');
+
+const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, err => {});
+
 const ClockScreen = () => {
   const { state, dispatch } = useContext(Context);
-  const { taskList } = state;
   const [showAddModal, setShowAddModal] = useState(false);
   const [showTaskList, setShowTaskList] = useState(false);
   // const [tasks, setTasks] = useState(taskList);
@@ -68,6 +72,9 @@ const ClockScreen = () => {
   };
 
   const clockStop = () => {
+    if (currentTime === 0) {
+      alarm.play();
+    }
     clearTimeout(timeoutRef.current);
     setClockIsRunning(false);
   };
@@ -78,6 +85,12 @@ const ClockScreen = () => {
       payload: task,
     });
     setShowAddModal(false);
+  };
+
+  const setTime = time => {
+    clockStop();
+    alarm.stop();
+    setCurrentTime(time);
   };
 
   return (
@@ -94,11 +107,7 @@ const ClockScreen = () => {
           <View style={[styles.overlay]} />
         </TouchableWithoutFeedback>
       )}
-      <TaskList
-        visible={showTaskList}
-        onClose={() => setShowTaskList(false)}
-        taskList={taskList}
-      />
+      <TaskList visible={showTaskList} onClose={() => setShowTaskList(false)} />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setShowTaskList(true)}>
           <Icon name="list" size={26} color={Colors.BLACK} />
@@ -110,18 +119,10 @@ const ClockScreen = () => {
             </View>
           </MenuTrigger>
           <MenuOptions optionsContainerStyle={styles.optionsContainer}>
-            <MenuOption
-              onSelect={() => {
-                clockStop();
-                setCurrentTime(TIME);
-              }}>
+            <MenuOption onSelect={() => setTime(TIME)}>
               <Text style={styles.optionText}>Work</Text>
             </MenuOption>
-            <MenuOption
-              onSelect={() => {
-                clockStop();
-                setCurrentTime(REST_TIME);
-              }}>
+            <MenuOption onSelect={() => setTime(REST_TIME)}>
               <Text style={styles.optionText}>Rest</Text>
             </MenuOption>
           </MenuOptions>
@@ -134,6 +135,9 @@ const ClockScreen = () => {
             clockIsRunning={clockIsRunning}
             onPlay={clockStart}
             onPause={clockStop}
+            currentTime={currentTime}
+            setWork={() => setTime(TIME)}
+            setRest={() => setTime(REST_TIME)}
           />
         </View>
       </View>
