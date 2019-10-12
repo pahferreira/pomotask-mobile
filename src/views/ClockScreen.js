@@ -16,6 +16,7 @@ import {
 } from 'react-native-popup-menu';
 import Context from '../context/Context';
 import Sound from 'react-native-sound';
+import PushNotification from 'react-native-push-notification';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -32,10 +33,10 @@ Sound.setCategory('Playback');
 const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, err => {});
 
 const ClockScreen = () => {
-  const { state, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showTaskList, setShowTaskList] = useState(false);
-  // const [tasks, setTasks] = useState(taskList);
+  const [type, setType] = useState('work');
   const [currentTime, setCurrentTime] = useState(TIME);
   const [clockIsRunning, setClockIsRunning] = useState(false);
   const timeoutRef = useRef();
@@ -72,10 +73,26 @@ const ClockScreen = () => {
   };
 
   const clockStop = () => {
+    clearTimeout(timeoutRef.current);
+
     if (currentTime === 0) {
       alarm.play();
+      if (clockIsRunning) {
+        const title = type === 'work' ? 'Well Done!' : 'Break time is over!';
+        const message =
+          type === 'work'
+            ? 'You completed your pomodoro. Lets take a break now!'
+            : 'Time to get back to work!';
+
+        PushNotification.localNotification({
+          title,
+          message,
+          vibrate: true,
+          playSound: false,
+        });
+      }
     }
-    clearTimeout(timeoutRef.current);
+
     setClockIsRunning(false);
   };
 
@@ -88,6 +105,11 @@ const ClockScreen = () => {
   };
 
   const setTime = time => {
+    if (time === TIME) {
+      setType('work');
+    } else {
+      setType('rest');
+    }
     clockStop();
     alarm.stop();
     setCurrentTime(time);
