@@ -8,4 +8,10 @@ export const Colors = {
   WHITE: '#ffffff',
 };
 
-export default { Colors };
+export const Metrics = {
+  text: {
+    medium: 16,
+  },
+};
+
+export default { Colors, Metrics };

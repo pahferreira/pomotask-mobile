@@ -1,13 +1,29 @@
-import React from 'react';
-import { Modal, View, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Modal,
+  View,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 import styles from './styles/AddTaskModalStyle';
 import { Colors } from '../theme/Theme';
+import i18n from '../i18n/i18n';
 
 // Component
 import ActionButton from '../components/ActionButton';
 
 const AddTaskModal = props => {
-  const { visible, onClose } = props;
+  const [task, setTask] = useState('');
+  const { visible, onClose, onAdd } = props;
+
+  const onPressAddTask = () => {
+    const newTask = {
+      name: task,
+      done: false,
+    };
+    onAdd(newTask);
+  };
   return (
     <Modal
       style={styles.modalBackground}
@@ -15,17 +31,27 @@ const AddTaskModal = props => {
       transparent={true}
       onRequestClose={onClose}
       animationType="fade">
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.title}>Add Task</Text>
+            <Text style={styles.title}>
+              {i18n.t('tasks.addTaskForm.title')}
+            </Text>
           </View>
-          <TextInput placeholder="Description..." style={styles.input} />
+          <TextInput
+            placeholder={i18n.t('tasks.addTaskForm.placeholder')}
+            style={styles.input}
+            onChangeText={e => setTask(e)}
+          />
           <View style={styles.footer}>
-            <ActionButton name="add" color={Colors.GREEN} />
+            <ActionButton
+              name={i18n.t('tasks.addTaskForm.button')}
+              color={Colors.GREEN}
+              onPress={onPressAddTask}
+            />
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

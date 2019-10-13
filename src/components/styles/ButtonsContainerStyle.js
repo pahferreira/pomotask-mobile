@@ -5,7 +5,10 @@ const styles = StyleSheet.create({
   containerButtons: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    marginHorizontal: 10,
   },
 });
 
