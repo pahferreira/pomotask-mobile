@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import ActionButton from './ActionButton';
 import { Colors } from '../theme/Theme';
 import styles from './styles/ButtonsContainerStyle';
+import i18n from '../i18n/i18n';
 
 const Buttons = props => {
   const {
@@ -17,7 +18,7 @@ const Buttons = props => {
     if (clockIsRunning) {
       return (
         <ActionButton
-          name="pause"
+          name={i18n.t('buttons.pause')}
           icon="pause"
           color={Colors.RED}
           onPress={onPause}
@@ -26,7 +27,7 @@ const Buttons = props => {
     } else {
       return (
         <ActionButton
-          name="play"
+          name={i18n.t('buttons.play')}
           icon="play"
           color={Colors.GREEN}
           onPress={onPlay}
@@ -43,18 +44,20 @@ const Buttons = props => {
         <>
           <View style={styles.buttonContainer}>
             <ActionButton
-              name="work"
+              name={i18n.t('buttons.work')}
               icon="fire"
               color={Colors.BLUE}
               onPress={setWork}
+              width={130}
             />
           </View>
           <View style={styles.buttonContainer}>
             <ActionButton
-              name="rest"
+              name={i18n.t('buttons.rest')}
               icon="coffee"
               color={Colors.BLUE}
               onPress={setRest}
+              width={130}
             />
           </View>
         </>

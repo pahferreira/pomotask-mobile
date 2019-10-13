@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
   },
   title: {
-    fontSize: 60,
+    fontSize: 40,
     fontFamily: 'IndieFlower',
     marginVertical: 20,
     color: Colors.GREEN,

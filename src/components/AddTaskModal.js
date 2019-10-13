@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from './styles/AddTaskModalStyle';
 import { Colors } from '../theme/Theme';
+import i18n from '../i18n/i18n';
 
 // Component
 import ActionButton from '../components/ActionButton';
@@ -33,16 +34,18 @@ const AddTaskModal = props => {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.title}>Add Task</Text>
+            <Text style={styles.title}>
+              {i18n.t('tasks.addTaskForm.title')}
+            </Text>
           </View>
           <TextInput
-            placeholder="Description..."
+            placeholder={i18n.t('tasks.addTaskForm.placeholder')}
             style={styles.input}
             onChangeText={e => setTask(e)}
           />
           <View style={styles.footer}>
             <ActionButton
-              name="add"
+              name={i18n.t('tasks.addTaskForm.button')}
               color={Colors.GREEN}
               onPress={onPressAddTask}
             />

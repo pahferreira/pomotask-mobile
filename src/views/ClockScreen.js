@@ -17,6 +17,7 @@ import {
 import Context from '../context/Context';
 import Sound from 'react-native-sound';
 import PushNotification from 'react-native-push-notification';
+import i18n from '../i18n/i18n';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -78,11 +79,14 @@ const ClockScreen = () => {
     if (currentTime === 0) {
       alarm.play();
       if (clockIsRunning) {
-        const title = type === 'work' ? 'Well Done!' : 'Break time is over!';
+        const title =
+          type === 'work'
+            ? i18n.t('notifications.work.title')
+            : i18n.t('notifications.rest.title');
         const message =
           type === 'work'
-            ? 'You completed your pomodoro. Lets take a break now!'
-            : 'Time to get back to work!';
+            ? i18n.t('notifications.work.message')
+            : i18n.t('notifications.rest.message');
 
         PushNotification.localNotification({
           title,
@@ -142,10 +146,10 @@ const ClockScreen = () => {
           </MenuTrigger>
           <MenuOptions optionsContainerStyle={styles.optionsContainer}>
             <MenuOption onSelect={() => setTime(TIME)}>
-              <Text style={styles.optionText}>Work</Text>
+              <Text style={styles.optionText}>{i18n.t('options.work')}</Text>
             </MenuOption>
             <MenuOption onSelect={() => setTime(REST_TIME)}>
-              <Text style={styles.optionText}>Rest</Text>
+              <Text style={styles.optionText}>{i18n.t('options.rest')}</Text>
             </MenuOption>
           </MenuOptions>
         </Menu>

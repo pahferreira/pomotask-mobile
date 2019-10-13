@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import styles from './styles/TaskListStyle';
 import { Colors } from '../theme/Theme';
 import Context from '../context/Context';
+import i18n from '../i18n/i18n';
 
 // Components
 import Task from './Task';
@@ -63,9 +64,7 @@ const TaskList = props => {
       );
     } else {
       return (
-        <Text style={styles.text}>
-          Your task list is empty. Please add one task.
-        </Text>
+        <Text style={styles.text}>{i18n.t('tasks.taskList.message')}</Text>
       );
     }
   };
@@ -77,7 +76,7 @@ const TaskList = props => {
           <Icon name="times" size={34} color={Colors.BLACK} />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>Task List</Text>
+      <Text style={styles.title}>{i18n.t('tasks.taskList.title')}</Text>
       {_renderList()}
     </Animated.View>
   );
