@@ -18,6 +18,7 @@ import Context from '../context/Context';
 import Sound from 'react-native-sound';
 import PushNotification from 'react-native-push-notification';
 import i18n from '../i18n/i18n';
+import BackgroundTimer from 'react-native-background-timer';
 
 // Components
 import ButtonsContainer from '../components/ButtonsContainer';
@@ -44,7 +45,7 @@ const ClockScreen = () => {
 
   useEffect(() => {
     if (clockIsRunning && currentTime > 0) {
-      timeoutRef.current = setTimeout(updateTime, 1000);
+      timeoutRef.current = BackgroundTimer.setTimeout(updateTime, 1000);
     } else {
       clockStop();
     }
@@ -74,7 +75,7 @@ const ClockScreen = () => {
   };
 
   const clockStop = () => {
-    clearTimeout(timeoutRef.current);
+    clearTimeout(BackgroundTimer.timeoutRef);
 
     if (currentTime === 0) {
       alarm.play();
