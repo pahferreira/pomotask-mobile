@@ -18,6 +18,10 @@ export function reducer(state = initialState, action) {
             : task;
         }),
       };
+    case 'CLEAR_TASK_LIST':
+      return {
+        taskList: state.taskList.filter(task => !task.done),
+      };
     default:
       return state;
   }
