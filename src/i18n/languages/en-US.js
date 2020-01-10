@@ -22,6 +22,7 @@ export default {
     taskList: {
       title: 'Task List',
       message: 'Your task list is empty. Please add one task.',
+      clear: 'Clear Finished Tasks',
     },
   },
   buttons: {

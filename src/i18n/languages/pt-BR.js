@@ -22,6 +22,7 @@ export default {
     taskList: {
       title: 'Lista de Tarefas',
       message: 'Sua lista está vazia. Por favor, adicione uma tarefa.',
+      clear: 'Limpar Tarefas Concluídas',
     },
   },
   buttons: {
