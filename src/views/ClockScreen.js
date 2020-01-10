@@ -33,12 +33,12 @@ import Button from '../components/Button';
 import TaskList from '../components/TaskList';
 import AddTaskModal from '../components/AddTaskModal';
 
-const TIME = 10;
-const REST_TIME = 5;
+const TIME = 60;
+const REST_TIME = 30;
 
 Sound.setCategory('Playback');
 
-const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, err => {});
+const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE);
 
 const ClockScreen = () => {
   const { dispatch } = useContext(Context);
