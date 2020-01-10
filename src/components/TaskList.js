@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   Animated,
   Dimensions,
   Easing,
+  StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import styles from './styles/TaskListStyle';
 import { Colors } from '../theme/Theme';
 import Context from '../context/Context';
 import i18n from '../i18n/i18n';
@@ -22,7 +22,7 @@ const TaskList = props => {
   const { taskList } = state;
   const { visible, onClose } = props;
   const { width } = Dimensions.get('screen');
-  let positionAnimatedValue = new Animated.Value(-width);
+  const [positionAnimatedValue] = useState(new Animated.Value(-width));
 
   useEffect(() => {
     if (visible) {
@@ -46,6 +46,12 @@ const TaskList = props => {
       payload: {
         index,
       },
+    });
+  };
+
+  const cleanDoneTasks = () => {
+    dispatch({
+      type: 'CLEAR_TASK_LIST',
     });
   };
 
@@ -75,10 +81,81 @@ const TaskList = props => {
           <Icon name="close" size={30} color={Colors.BLACK} />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>{i18n.t('tasks.taskList.title')}</Text>
-      {_renderList()}
+      <View style={styles.body}>
+        <Text style={styles.title}>{i18n.t('tasks.taskList.title')}</Text>
+        {_renderList()}
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={cleanDoneTasks}>
+          <Text style={styles.buttonText}>
+            {i18n.t('tasks.taskList.clear').toUpperCase()}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 };
 
-export default TaskList;
+const styles = StyleSheet.create({
+  container: {
+    width: '90%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: '5%',
+    paddingVertical: '2.5%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: +2,
+    backgroundColor: Colors.WHITE,
+  },
+  overlay: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    backgroundColor: Colors.BLACK_TRANSPARENT,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: '100%',
+    height: '5%',
+  },
+  body: {
+    height: '90%',
+    alignItems: 'center',
+  },
+  footer: {
+    height: '5%',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  listContainer: {
+    width: '100%',
+  },
+  text: {
+    fontFamily: 'Roboto',
+    color: Colors.BLACK,
+  },
+  title: {
+    fontSize: 40,
+    fontFamily: 'IndieFlower',
+    marginVertical: 20,
+    color: Colors.BLUE,
+  },
+  buttonText: {
+    color: Colors.RED,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default React.memo(TaskList);
