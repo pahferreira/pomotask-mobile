@@ -9,8 +9,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: '5%',
-    paddingVertical: '3%',
     backgroundColor: Colors.WHITE,
   },
   header: {
@@ -18,6 +16,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+    paddingHorizontal: '5%',
+    marginTop: '5%',
   },
   overlay: {
     width,
@@ -30,9 +30,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 8,
   },
   footer: {
-    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
   },
   containerButtons: {

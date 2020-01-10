@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Colors } from '../../theme/Theme';
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 11,
     paddingHorizontal: '5%',
     width: '75%',
-    height: 300,
+    height: 250,
   },
   footer: {
     width: '100%',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    color: Colors.GREEN,
+    color: Colors.BLUE,
     fontFamily: 'IndieFlower',
   },
   input: {
@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     borderRadius: 10,
     height: '60%',
+  },
+  buttonText: {
+    color: Colors.BLUE,
+    fontWeight: 'bold',
   },
 });
 

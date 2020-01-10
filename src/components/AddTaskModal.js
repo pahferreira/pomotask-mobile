@@ -5,13 +5,10 @@ import {
   Text,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from 'react-native';
 import styles from './styles/AddTaskModalStyle';
-import { Colors } from '../theme/Theme';
 import i18n from '../i18n/i18n';
-
-// Component
-import ActionButton from '../components/ActionButton';
 
 const AddTaskModal = props => {
   const [task, setTask] = useState('');
@@ -44,11 +41,11 @@ const AddTaskModal = props => {
             onChangeText={e => setTask(e)}
           />
           <View style={styles.footer}>
-            <ActionButton
-              name={i18n.t('tasks.addTaskForm.button')}
-              color={Colors.GREEN}
-              onPress={onPressAddTask}
-            />
+            <TouchableOpacity onPress={onPressAddTask}>
+              <Text style={styles.buttonText}>
+                {i18n.t('tasks.addTaskForm.button').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

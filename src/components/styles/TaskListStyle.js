@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: 'IndieFlower',
     marginVertical: 20,
-    color: Colors.GREEN,
+    color: Colors.BLUE,
   },
 });
 

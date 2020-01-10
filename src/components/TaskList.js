@@ -3,13 +3,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   FlatList,
   Animated,
   Dimensions,
   Easing,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import styles from './styles/TaskListStyle';
 import { Colors } from '../theme/Theme';
 import Context from '../context/Context';
@@ -39,7 +38,7 @@ const TaskList = props => {
         easing: Easing.bezier(0, 0.01, 1, 0.27),
       }).start();
     }
-  }, [visible]);
+  }, [positionAnimatedValue, visible, width]);
 
   const onFinishTask = index => {
     dispatch({
@@ -73,7 +72,7 @@ const TaskList = props => {
     <Animated.View style={[styles.container, { left: positionAnimatedValue }]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onClose}>
-          <Icon name="times" size={34} color={Colors.BLACK} />
+          <Icon name="close" size={30} color={Colors.BLACK} />
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>{i18n.t('tasks.taskList.title')}</Text>
