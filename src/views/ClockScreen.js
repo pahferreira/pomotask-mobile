@@ -33,8 +33,8 @@ import Button from '../components/Button';
 import TaskList from '../components/TaskList';
 import AddTaskModal from '../components/AddTaskModal';
 
-const TIME = 60;
-const REST_TIME = 30;
+const TIME = 1500;
+const REST_TIME = 300;
 
 Sound.setCategory('Playback');
 
