@@ -42,9 +42,14 @@ const AddTaskModal = props => {
             onChangeText={e => setTask(e)}
           />
           <View style={styles.footer}>
+            <TouchableOpacity onPress={onClose} style={styles.cancelContainer}>
+              <Text style={styles.cancelText}>
+                {i18n.t('tasks.addTaskForm.buttons.cancel').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={onPressAddTask}>
               <Text style={styles.buttonText}>
-                {i18n.t('tasks.addTaskForm.button').toUpperCase()}
+                {i18n.t('tasks.addTaskForm.buttons.add').toUpperCase()}
               </Text>
             </TouchableOpacity>
           </View>
@@ -78,8 +83,9 @@ const styles = StyleSheet.create({
   footer: {
     width: '100%',
     height: '20%',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   title: {
     fontSize: 26,
@@ -92,7 +98,13 @@ const styles = StyleSheet.create({
     borderColor: Colors.LIGHT_GREEN,
     color: Colors.BLACK,
     borderRadius: 10,
-    height: '60%',
+  },
+  cancelText: {
+    color: Colors.RED,
+    fontWeight: 'bold',
+  },
+  cancelContainer: {
+    marginRight: 10,
   },
   buttonText: {
     color: Colors.BLUE,
