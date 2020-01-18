@@ -27,15 +27,17 @@ const TaskList = props => {
   useEffect(() => {
     if (visible) {
       Animated.timing(positionAnimatedValue, {
-        duration: 500,
+        duration: 400,
         toValue: 0,
         easing: Easing.bezier(0, 0, 0.34, 0.99),
+        useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(positionAnimatedValue, {
-        duration: 500,
+        duration: 400,
         toValue: -width,
-        easing: Easing.bezier(0, 0.01, 1, 0.27),
+        easing: Easing.bezier(0, 0, 0.34, 0.99),
+        useNativeDriver: true,
       }).start();
     }
   }, [positionAnimatedValue, visible, width]);
@@ -75,7 +77,11 @@ const TaskList = props => {
   };
 
   return (
-    <Animated.View style={[styles.container, { left: positionAnimatedValue }]}>
+    <Animated.View
+      style={[
+        styles.container,
+        { transform: [{ translateX: positionAnimatedValue }] },
+      ]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onClose}>
           <Icon name="close" size={30} color={Colors.BLACK} />
