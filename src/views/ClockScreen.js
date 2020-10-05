@@ -5,21 +5,10 @@ import React, {
   useContext,
   useCallback,
 } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles/ClockScreenStyle';
 import { Colors } from '../theme/Theme';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
 import Context from '../context/Context';
 import Sound from 'react-native-sound';
 import PushNotification from 'react-native-push-notification';

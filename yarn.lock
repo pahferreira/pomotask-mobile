@@ -5295,11 +5295,6 @@ react-native-i18n@^2.0.15:
   dependencies:
     i18n-js "3.0.11"
 
-react-native-popup-menu@^0.15.6:
-  version "0.15.6"
-  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.15.6.tgz#ebf885c289028e330dd66d887e685a8b0c2de970"
-  integrity sha512-ILFbQEofZQThVYAtVcOEgHJ+9wvn8992J+Oy/ByX83PoP88Meq3iw3pG1AwxMOoAPm/LjihtsDBqZ1lxjvosDg==
-
 react-native-push-notification@^3.1.9:
   version "3.1.9"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.9.tgz#760ee06e743fef74fc9fcb672dac40794fdc4c47"
