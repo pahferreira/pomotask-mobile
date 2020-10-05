@@ -5,13 +5,11 @@ import {
   Text,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
-import styles from './styles/AddTaskModalStyle';
-import { Colors } from '../theme/Theme';
 import i18n from '../i18n/i18n';
-
-// Component
-import ActionButton from '../components/ActionButton';
+import { Colors } from '../theme/Theme';
 
 const AddTaskModal = props => {
   const [task, setTask] = useState('');
@@ -44,16 +42,74 @@ const AddTaskModal = props => {
             onChangeText={e => setTask(e)}
           />
           <View style={styles.footer}>
-            <ActionButton
-              name={i18n.t('tasks.addTaskForm.button')}
-              color={Colors.GREEN}
-              onPress={onPressAddTask}
-            />
+            <TouchableOpacity onPress={onClose} style={styles.cancelContainer}>
+              <Text style={styles.cancelText}>
+                {i18n.t('tasks.addTaskForm.buttons.cancel').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressAddTask}>
+              <Text style={styles.buttonText}>
+                {i18n.t('tasks.addTaskForm.buttons.add').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.BLACK_TRANSPARENT,
+  },
+  header: {
+    width: '100%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  content: {
+    justifyContent: 'space-around',
+    backgroundColor: Colors.WHITE,
+    borderRadius: 11,
+    paddingHorizontal: '5%',
+    width: '75%',
+    height: 250,
+  },
+  footer: {
+    width: '100%',
+    height: '20%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 26,
+    color: Colors.BLUE,
+    fontFamily: 'IndieFlower',
+  },
+  input: {
+    textAlignVertical: 'top',
+    borderWidth: 0.5,
+    borderColor: Colors.LIGHT_GREEN,
+    color: Colors.BLACK,
+    borderRadius: 10,
+  },
+  cancelText: {
+    color: Colors.RED,
+    fontWeight: 'bold',
+  },
+  cancelContainer: {
+    marginRight: 10,
+  },
+  buttonText: {
+    color: Colors.BLUE,
+    fontWeight: 'bold',
+  },
+});
 
 export default AddTaskModal;

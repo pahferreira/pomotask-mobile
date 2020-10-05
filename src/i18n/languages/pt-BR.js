@@ -16,12 +16,16 @@ export default {
   tasks: {
     addTaskForm: {
       title: 'Adicionar Tarefa',
-      button: 'adicionar',
-      placeholder: 'Descrição...',
+      buttons: {
+        add: 'adicionar',
+        cancel: 'cancelar',
+      },
+      placeholder: 'Digite sua tarefa',
     },
     taskList: {
       title: 'Lista de Tarefas',
       message: 'Sua lista está vazia. Por favor, adicione uma tarefa.',
+      clear: 'Limpar Tarefas Concluídas',
     },
   },
   buttons: {

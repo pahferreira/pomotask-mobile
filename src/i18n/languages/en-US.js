@@ -16,12 +16,16 @@ export default {
   tasks: {
     addTaskForm: {
       title: 'Add Task',
-      button: 'add',
-      placeholder: 'Description...',
+      buttons: {
+        add: 'add',
+        cancel: 'cancel',
+      },
+      placeholder: 'Enter your task',
     },
     taskList: {
       title: 'Task List',
       message: 'Your task list is empty. Please add one task.',
+      clear: 'Clear Finished Tasks',
     },
   },
   buttons: {

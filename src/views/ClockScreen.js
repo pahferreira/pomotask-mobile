@@ -1,19 +1,14 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
+import { View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles/ClockScreenStyle';
 import { Colors } from '../theme/Theme';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Context from '../context/Context';
 import Sound from 'react-native-sound';
 import PushNotification from 'react-native-push-notification';
@@ -21,18 +16,18 @@ import i18n from '../i18n/i18n';
 import BackgroundTimer from 'react-native-background-timer';
 
 // Components
-import ButtonsContainer from '../components/ButtonsContainer';
+import ActionButton from '../components/ActionButton';
 import Clock from '../components/Clock';
-import AddButton from '../components/AddButton';
+import Button from '../components/Button';
 import TaskList from '../components/TaskList';
 import AddTaskModal from '../components/AddTaskModal';
 
-const TIME = 10;
-const REST_TIME = 5;
+const TIME = 1500;
+const REST_TIME = 300;
 
 Sound.setCategory('Playback');
 
-const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE, err => {});
+const alarm = new Sound('alarm.mp3', Sound.MAIN_BUNDLE);
 
 const ClockScreen = () => {
   const { dispatch } = useContext(Context);
@@ -41,15 +36,29 @@ const ClockScreen = () => {
   const [type, setType] = useState('work');
   const [currentTime, setCurrentTime] = useState(TIME);
   const [clockIsRunning, setClockIsRunning] = useState(false);
-  const timeoutRef = useRef();
+  const interval = useRef();
 
   useEffect(() => {
-    if (clockIsRunning && currentTime > 0) {
-      timeoutRef.current = BackgroundTimer.setTimeout(updateTime, 1000);
-    } else {
+    if (currentTime === 0) {
       clockStop();
     }
-  }, [currentTime]);
+  }, [clockStop, currentTime]);
+
+  useEffect(() => {
+    interval.current = BackgroundTimer.setInterval(() => {
+      if (clockIsRunning) {
+        setCurrentTime(s => {
+          if (s > 0) {
+            return s - 1;
+          }
+          return 0;
+        });
+      }
+    }, 1000);
+    return () => {
+      BackgroundTimer.clearInterval(interval.current);
+    };
+  }, [clockIsRunning]);
 
   const formatTime = time => {
     let minutes = Math.floor(time / 60)
@@ -60,46 +69,38 @@ const ClockScreen = () => {
     return `${minutes}:${seconds}`;
   };
 
-  const updateTime = () => {
-    setCurrentTime(currentTime - 1);
-    if (currentTime === 0) {
-      clockStop();
-    }
-  };
-
-  const clockStart = () => {
+  const clockStart = async () => {
     if (currentTime > 0) {
       setClockIsRunning(true);
-      updateTime();
     }
   };
 
-  const clockStop = () => {
-    clearTimeout(BackgroundTimer.timeoutRef);
-
-    if (currentTime === 0) {
-      alarm.play();
-      if (clockIsRunning) {
-        const title =
-          type === 'work'
-            ? i18n.t('notifications.work.title')
-            : i18n.t('notifications.rest.title');
-        const message =
-          type === 'work'
-            ? i18n.t('notifications.work.message')
-            : i18n.t('notifications.rest.message');
-
-        PushNotification.localNotification({
-          title,
-          message,
-          vibrate: true,
-          playSound: false,
-        });
-      }
-    }
-
+  const clockPause = () => {
     setClockIsRunning(false);
   };
+
+  const clockStop = useCallback(() => {
+    BackgroundTimer.clearInterval(interval.current);
+    alarm.play();
+    if (clockIsRunning) {
+      const title =
+        type === 'work'
+          ? i18n.t('notifications.work.title')
+          : i18n.t('notifications.rest.title');
+      const message =
+        type === 'work'
+          ? i18n.t('notifications.work.message')
+          : i18n.t('notifications.rest.message');
+
+      PushNotification.localNotification({
+        title,
+        message,
+        vibrate: true,
+        playSound: false,
+      });
+      setClockIsRunning(false);
+    }
+  }, [clockIsRunning, type]);
 
   const handleAddTask = task => {
     dispatch({
@@ -115,7 +116,7 @@ const ClockScreen = () => {
     } else {
       setType('rest');
     }
-    clockStop();
+    setClockIsRunning(false);
     alarm.stop();
     setCurrentTime(time);
   };
@@ -137,39 +138,28 @@ const ClockScreen = () => {
       <TaskList visible={showTaskList} onClose={() => setShowTaskList(false)} />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setShowTaskList(true)}>
-          <Icon name="list" size={26} color={Colors.BLACK} />
+          <Icon name="list" size={30} color={Colors.BLACK} />
         </TouchableOpacity>
-        <Menu>
-          <MenuTrigger>
-            <View style={styles.triggerOptionsContainer}>
-              <Icon name="ellipsis-v" size={26} color={Colors.BLACK} />
-            </View>
-          </MenuTrigger>
-          <MenuOptions optionsContainerStyle={styles.optionsContainer}>
-            <MenuOption onSelect={() => setTime(TIME)}>
-              <Text style={styles.optionText}>{i18n.t('options.work')}</Text>
-            </MenuOption>
-            <MenuOption onSelect={() => setTime(REST_TIME)}>
-              <Text style={styles.optionText}>{i18n.t('options.rest')}</Text>
-            </MenuOption>
-          </MenuOptions>
-        </Menu>
+        <TouchableOpacity onPress={() => setShowAddModal(true)}>
+          <Icon name="add" size={30} color={Colors.BLUE} />
+        </TouchableOpacity>
       </View>
       <View style={styles.content}>
         <Clock>{formatTime(currentTime)}</Clock>
         <View style={styles.containerButtons}>
-          <ButtonsContainer
+          <ActionButton
             clockIsRunning={clockIsRunning}
-            onPlay={clockStart}
-            onPause={clockStop}
-            currentTime={currentTime}
-            setWork={() => setTime(TIME)}
-            setRest={() => setTime(REST_TIME)}
+            onPressPlay={clockStart}
+            onPressPause={clockPause}
           />
         </View>
       </View>
       <View style={styles.footer}>
-        <AddButton onPress={() => setShowAddModal(true)} />
+        <Button name={i18n.t('buttons.work')} onPress={() => setTime(TIME)} />
+        <Button
+          name={i18n.t('buttons.rest')}
+          onPress={() => setTime(REST_TIME)}
+        />
       </View>
     </View>
   );

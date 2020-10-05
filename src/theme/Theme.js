@@ -12,6 +12,7 @@ export const Metrics = {
   text: {
     medium: 16,
   },
+  clock: 80,
 };
 
 export default { Colors, Metrics };
